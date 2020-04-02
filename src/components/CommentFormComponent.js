@@ -18,8 +18,9 @@ class CommentForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
-        alert('Current State is: ' + JSON.stringify(event));
+    handleSubmit(values) {
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+
         this.toggleModal();
     }
 
@@ -85,13 +86,13 @@ class CommentForm extends Component {
                                     />
                                 </Col>
                             </Row>
-                            <Label htmlFor=".message">Comment</Label>
+                            <Label htmlFor=".comment">Comment</Label>
                             <Row className="form-group">
                                 <Col>
-                                    <Control.textarea model=".message" id=".message" name=".message" className="form-control" rows="6" validators={{ required }} />
+                                    <Control.textarea model=".comment" id=".comment" name=".comment" className="form-control" rows="6" validators={{ required }} />
                                     <Errors
                                         className="text-danger"
-                                        model=".message"
+                                        model=".comment"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
