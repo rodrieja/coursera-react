@@ -1,12 +1,15 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import { Fade, Stagger } from 'react-animation-components';
+import { Loading } from './LoadingComponent';
 
 function RenderLeader({ leader }) {
     return (
         <Media tag="li">
             <Media left middle>
-                <Media object src={leader.image} alt={leader.name} />
+                <Media object src={baseUrl + leader.image} alt={leader.name} />
             </Media>
             <Media body className="ml-5 m-1">
                 <Media heading>{leader.name}</Media>
@@ -18,12 +21,6 @@ function RenderLeader({ leader }) {
 }
 
 function About(props) {
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <RenderLeader leader={leader} />
-        );
-    });
-
     return (
         <div className="container">
             <div className="row">
@@ -78,14 +75,41 @@ function About(props) {
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
                 </div>
-                <div className="col-12">
-                    <Media list>
-                        {leaders}
-                    </Media>
-                </div>
+                <RenderLeadership leaders={props.leaders.leaders} isLoading={props.leaders.isLoading} errMess={props.leaders.errMess} />
             </div>
         </div>
     );
+}
+
+function RenderLeadership({ leaders, isLoading, errMess }) {
+    if (isLoading) {
+        return (
+            <Loading />
+        );
+    }
+    else if (errMess) {
+        return (
+            <h4>{errMess}</h4>
+        );
+    }
+    else {
+        return (
+            <div className="col-12">
+                <Media list>
+                    <Stagger in>
+                        {leaders.map((leader) => {
+                            return (
+                                <Fade in>
+                                    <RenderLeader leader={leader} />
+                                </Fade>
+                            )
+                        })
+                        }
+                    </Stagger>
+                </Media>
+            </div>
+        );
+    }
 }
 
 export default About;    
