@@ -25,7 +25,7 @@ function DishDetail(props) {
             </div>
         );
     }
-    else if (props.dish != null)
+    else if (props.dish != null) {
         return (
             <div className="container">
                 <div className="row">
@@ -40,33 +40,27 @@ function DishDetail(props) {
                 </div>
                 <div className="row">
                     <RenderDish dish={props.dish} />
-                    <RenderComments
-                        comments={props.comments}
+                    <RenderComments comments={props.comments}
                         postComment={props.postComment}
                         dishId={props.dish.id}
                     />
                 </div>
             </div>
         );
+    }
 }
 
 function RenderDish({ dish }) {
     if (dish)
         return (
             <div className="col-12 col-md-5 m-1">
-                <FadeTransform
-                    in
-                    transformProps={{
-                        exitTransform: 'scale(0.5) translateY(-50%)'
-                    }}>
-                    <Card>
-                        <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-                        <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
-                        </CardBody>
-                    </Card>
-                </FadeTransform>
+                <Card>
+                    <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
             </div>
         );
     else
@@ -77,26 +71,23 @@ function RenderDish({ dish }) {
 
 function RenderComments({ comments, postComment, dishId }) {
     if (comments) {
-        const dishComments = comments.map((comment) => {
-            return (
-                <Fade in>
-                    <li key={comment.id}>
-                        <p>{comment.comment}</p>
-                        <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</p>
-                    </li>
-                </Fade>
-            );
-        });
         return (
             <div className="col-12 col-md-5 m-1 offset-md-5">
                 <h4>Comments</h4>
-                <ul class="list-unstyled">
-                    <Stagger in>
-                        {dishComments}
-                    </Stagger>
-                </ul>
+                <Stagger in>
+                    {comments.map((comment) => {
+                        return (
+                            <Fade in>
+                                <li key={comment.id}>
+                                    <p>{comment.comment}</p>
+                                    <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</p>
+                                </li>
+                            </Fade>
+                        );
+                    })}
+                </Stagger>
                 <CommentForm dishId={dishId} postComment={postComment} />
-            </div >
+            </div>
         )
     }
     else

@@ -8,7 +8,7 @@ function RenderMenuItem({ dish }) {
     return (
         <Card>
             <Link to={`/menu/${dish.id}`} >
-                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardImgOverlay>
                     <CardTitle>{dish.name}</CardTitle>
                 </CardImgOverlay>
@@ -25,7 +25,6 @@ const Menu = (props) => {
             </div>
         )
     });
-
     if (props.dishes.isLoading) {
         return (
             <div className="container">
@@ -46,7 +45,7 @@ const Menu = (props) => {
             </div>
         );
     }
-    else
+    else {
         return (
             <div className="container">
                 <div className="row">
@@ -64,6 +63,7 @@ const Menu = (props) => {
                 </div>
             </div>
         );
+    }
 }
 
 export default Menu;

@@ -19,8 +19,7 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
-
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.message);
         this.toggleModal();
     }
 
@@ -86,13 +85,13 @@ class CommentForm extends Component {
                                     />
                                 </Col>
                             </Row>
-                            <Label htmlFor=".comment">Comment</Label>
+                            <Label htmlFor=".message">Comment</Label>
                             <Row className="form-group">
                                 <Col>
-                                    <Control.textarea model=".comment" id=".comment" name=".comment" className="form-control" rows="6" validators={{ required }} />
+                                    <Control.textarea model=".message" id=".message" name=".message" className="form-control" rows="6" validators={{ required }} />
                                     <Errors
                                         className="text-danger"
-                                        model=".comment"
+                                        model=".message"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
